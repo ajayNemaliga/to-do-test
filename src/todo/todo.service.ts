@@ -3,18 +3,24 @@ import { CreateTodoDto } from './dto/create-todo.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { Prisma } from '@prisma/client';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import { UserEmail } from 'src/common/decorators/user-email.decorator';
 
 @Injectable()
 export class TodoService {
   constructor(private readonly databaseService: DatabaseService) {}
-  async create(createTodoDto: CreateTodoDto) {
+  async create(createTodoDto: CreateTodoDto, email: string) {
     try {
+      const user = await this.databaseService.user.findUnique({
+        where: {
+          email,
+        }
+      })
       const data: Prisma.TodoCreateInput = {
         description: createTodoDto.description,
         task: createTodoDto.task,
         status: 'ACTIVE',
         user: {
-          connect: { email: createTodoDto.email }, // Correct way to reference existing User
+          connect: { email: user.email }, // Correct way to reference existing User
         },
       };
       console.log(data);
@@ -24,8 +30,19 @@ export class TodoService {
     }
   }
   @Get()
-  async findAll() {
-    return await this.databaseService.todo.findMany();
+  async findAll(@UserEmail() userEmail: string) {
+    console.log(userEmail);
+    const user = await this.databaseService.user.findUnique({
+      where: { email: userEmail },
+    });
+    if (!user) {
+      throw new Error('User not found.');
+    }
+    return await this.databaseService.todo.findMany({
+      where: {
+        userEmail
+      }
+    });
   }
   @Get(':id')
   async findOne(id: number) {

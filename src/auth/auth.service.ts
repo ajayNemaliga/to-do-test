@@ -28,13 +28,13 @@ export class AuthService {
     console.log(
       this.databaseService.user.findFirst({
         where: {
-          email: email,
+          email: loginData.email,
         },
       }),
     );
     const user = await this.databaseService.user.findFirst({
       where:{
-        email: email
+        email: loginData.email
       }
     })
     if (!user) {
@@ -45,7 +45,15 @@ export class AuthService {
       throw new NotFoundException('Wrong Password');
     }
     return {
-      token: this.jwtservice.sign({ email }),
+      token: this.jwtservice.sign({
+          email: loginData.email,
+          password: loginData.password,
+        },
+        {
+          secret: 'Secret',
+          expiresIn: '60m',
+        },
+      ),
     }
   }
   async register(registerData: RegisterUserDto) {
