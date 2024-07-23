@@ -1,4 +1,4 @@
-import { Get, Injectable, Param } from '@nestjs/common';
+import { Get, Injectable, Param, Patch } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { DatabaseService } from '../database/database.service';
 import { Prisma } from '@prisma/client';
@@ -52,7 +52,7 @@ export class TodoService {
       },
     });
   }
-
+  @Patch(':id')
   async update(id: number, updateTodoDto: UpdateTodoDto) {
     return this.databaseService.todo.update({
       where: {
