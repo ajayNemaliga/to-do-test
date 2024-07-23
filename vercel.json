@@ -19,7 +19,7 @@
         "methods":[
                 "GET",
                 "POST",
-                "PUT",
+                "PUT","PATCH",
                 "DELETE"
         ]
       }

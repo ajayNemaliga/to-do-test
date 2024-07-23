@@ -13,7 +13,5 @@ export class DatabaseService
     await this.$disconnect();
   }
 
- /*  async OnModuleInit() {
-    await this.$connect();
-  } */
+ 
 }
