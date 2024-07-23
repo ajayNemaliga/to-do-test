@@ -61,6 +61,7 @@ export class TodoController {
   @UseGuards(JwtAuthGaurd)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
+    console.log(`Updating task with ID: ${id}`);
     return this.todoService.update(+id, updateTodoDto);
   }
   @ApiBearerAuth()

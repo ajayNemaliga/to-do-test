@@ -54,6 +54,7 @@ export class TodoService {
   }
   @Patch(':id')
   async update(id: number, updateTodoDto: UpdateTodoDto) {
+    console.log(`Updating task with ID: ${id}`);
     return this.databaseService.todo.update({
       where: {
         id: id,
