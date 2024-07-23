@@ -1,9 +1,9 @@
 import { Get, Injectable, Param } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import { Prisma } from '@prisma/client';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { UserEmail } from 'src/common/decorators/user-email.decorator';
+import { UserEmail } from '../common/decorators/user-email.decorator';
 
 @Injectable()
 export class TodoService {

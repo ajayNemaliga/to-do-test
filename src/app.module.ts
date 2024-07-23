@@ -3,6 +3,8 @@ import { DatabaseModule } from './database/database.module';
 import { TodoModule } from './todo/todo.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 @Module({
   imports: [
     DatabaseModule,
@@ -13,8 +15,8 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: '.env', // Ensure it points to your .env file
     }),
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {
   constructor() {
